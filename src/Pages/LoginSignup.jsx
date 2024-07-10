@@ -16,7 +16,7 @@ const LoginSignup = () => {
 
   const login = async () => {
     let responseData;
-    await fetch("http://localhost:4000/login", {
+    await fetch("https://ecom-backend-ghce.onrender.com/login", {
       method: "POST",
       headers: {
         accept: "application/form-data",
@@ -36,7 +36,7 @@ const LoginSignup = () => {
 
   const signup = async () => {
     let responseData;
-    await fetch("http://localhost:4000/signup", {
+    await fetch("https://ecom-backend-ghce.onrender.com/signup", {
       method: "POST",
       headers: {
         accept: "application/form-data",
