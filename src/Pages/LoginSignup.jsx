@@ -16,7 +16,7 @@ const LoginSignup = () => {
 
   const login = async () => {
     let responseData;
-    await fetch("https://ecom-backend-ghce.onrender.com/login", {
+    await fetch("https://backend-ovfj.onrender.com/login", {
       method: "POST",
       headers: {
         accept: "application/form-data",
@@ -36,7 +36,7 @@ const LoginSignup = () => {
 
   const signup = async () => {
     let responseData;
-    await fetch("https://ecom-backend-ghce.onrender.com/signup", {
+    await fetch("https://backend-ovfj.onrender.com/signup", {
       method: "POST",
       headers: {
         accept: "application/form-data",
