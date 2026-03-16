@@ -74,25 +74,65 @@
     gap: 10px;
 }
 
-.productdisplay-right-sizes div{
+.productdisplay-size-option{
     padding: 10px 20px;
     background: #fbfbfb;
     border: 1px solid #ebebeb;
-    border-radius: 3px;
+    border-radius: 999px;
     cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-.productdisplay-right button{
+.productdisplay-size-option.active{
+    background: #1e1b18;
+    border-color: #1e1b18;
+    color: white;
+}
+
+.productdisplay-addtocart{
     padding: 15px 40px;
-    width: 200px;
+    width: 260px;
     font-size: 15px;
     font-weight: 600;
     color: white;
-    background: #ff4141;
+    background: #c96c3f;
     margin-bottom: 10px;
     border: none;
     outline: none;
     cursor: pointer;
+    border-radius: 999px;
+}
+
+.productdisplay-status{
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 6px 0 10px;
+    padding: 12px 14px;
+    width: fit-content;
+}
+
+.productdisplay-status.success{
+    background: rgba(30, 122, 77, 0.12);
+    color: #1e7a4d;
+}
+
+.productdisplay-status.warning{
+    background: rgba(201, 108, 63, 0.12);
+    color: #8c4220;
+}
+
+.productdisplay-status.error{
+    background: rgba(180, 57, 57, 0.12);
+    color: #b43939;
+}
+
+.productdisplay-cart-indicator{
+    color: #6b6258;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
 }
 
 .productdisplay-right-category{
@@ -141,11 +181,11 @@
         margin-top: 20px;
         font-size: 20px;
     }
-    .productdisplay-right-sizes div{
+    .productdisplay-size-option{
         padding: 14px 20px;
 
     }
-    .productdisplay-right button{
+    .productdisplay-addtocart{
         width: 150px;
         padding: 15px 0px;
         margin-bottom: 20px;
@@ -184,12 +224,12 @@
     .productdisplay-right-sizes{
         margin: 10px 0px;
     }
-    .productdisplay-right-sizes div{
+    .productdisplay-size-option{
         padding: 10px 16px;
         font-size: 12px;
 
     }
-    .productdisplay-right button{
+    .productdisplay-addtocart{
         width: 120px;
         padding: 10px 0px;
         margin-bottom: 10px;
@@ -237,11 +277,11 @@
         margin: 10px;
         gap: 5px;
     }
-    .productdisplay-right-sizes div{
+    .productdisplay-size-option{
         padding: 4px 11px;
 
     }
-    .productdisplay-right button{
+    .productdisplay-addtocart{
         width: 100px;
         font-size: 12px;
     }
@@ -284,11 +324,11 @@
         gap: 10px;
         margin: 20px 0px;
     }
-    .productdisplay-right-sizes div{
+    .productdisplay-size-option{
         padding: 10px 16px;
         font-size: 14px;
     }
-    .productdisplay-right button{
+    .productdisplay-addtocart{
         width: 130px;
         font-size: 15px;
         padding: 12px 0px;

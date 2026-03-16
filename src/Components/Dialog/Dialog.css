@@ -1,0 +1,97 @@
+.dialog-backdrop {
+  align-items: center;
+  background: rgba(17, 14, 12, 0.52);
+  backdrop-filter: blur(8px);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;
+  z-index: 200;
+}
+
+.dialog-card {
+  background:
+    radial-gradient(circle at top right, rgba(201, 108, 63, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(255, 251, 245, 0.98), rgba(244, 234, 220, 0.98));
+  border: 1px solid rgba(73, 55, 42, 0.1);
+  border-radius: 28px;
+  box-shadow: 0 28px 64px rgba(29, 21, 15, 0.28);
+  max-width: 460px;
+  padding: 24px;
+  width: min(460px, 100%);
+}
+
+.dialog-card.warning {
+  background:
+    radial-gradient(circle at top right, rgba(201, 108, 63, 0.22), transparent 34%),
+    linear-gradient(180deg, rgba(255, 248, 242, 0.98), rgba(247, 233, 220, 0.98));
+}
+
+.dialog-card.error {
+  background:
+    radial-gradient(circle at top right, rgba(180, 57, 57, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(255, 249, 249, 0.98), rgba(247, 232, 232, 0.98));
+}
+
+.dialog-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dialog-kicker {
+  color: #8c4220;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.dialog-copy h3 {
+  color: #1e1b18;
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+
+.dialog-copy p {
+  color: #6d645a;
+  line-height: 1.7;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 22px;
+}
+
+.dialog-button {
+  border: none;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  min-width: 112px;
+  padding: 12px 18px;
+}
+
+.dialog-button.primary {
+  background: #1e1b18;
+  color: #fffaf4;
+}
+
+.dialog-button.secondary {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(73, 55, 42, 0.14);
+  color: #1e1b18;
+}
+
+@media (max-width: 640px) {
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .dialog-button {
+    width: 100%;
+  }
+}

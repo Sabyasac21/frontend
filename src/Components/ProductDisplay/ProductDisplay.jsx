@@ -1,12 +1,57 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ProductDisplay.css';
 import star_icon from '../Assests/star_icon.png';
 import star_dull_icon from '../Assests/star_dull_icon.png'
 import { ShopContext } from '../../Context/ShopContext';
+import { useNavigate } from 'react-router-dom';
 
 const ProductDisplay = (props) => {
     const {product} = props
-    const{addToCart} = useContext(ShopContext)
+    const {addToCart, cartItems, isAuthenticated} = useContext(ShopContext)
+    const navigate = useNavigate();
+    const [selectedSize, setSelectedSize] = useState("");
+    const [statusMessage, setStatusMessage] = useState("");
+    const [statusType, setStatusType] = useState("");
+    const sizes = ["S", "M", "L", "XL", "XXL"];
+
+    useEffect(() => {
+        setSelectedSize("");
+        setStatusMessage("");
+        setStatusType("");
+    }, [product?.id]);
+
+    if (!product) {
+        return null;
+    }
+
+    const selectedQuantity = cartItems?.[product.id] || 0;
+
+    const showStatus = (message, type) => {
+        setStatusMessage(message);
+        setStatusType(type);
+    };
+
+    const handleAddToCart = async () => {
+        if (!isAuthenticated()) {
+            showStatus("Please log in to add items to your cart.", "warning");
+            setTimeout(() => navigate('/login'), 600);
+            return;
+        }
+
+        if (!selectedSize) {
+            showStatus("Select a size before adding this product.", "warning");
+            return;
+        }
+
+        const result = await addToCart(product.id);
+        if (result.success) {
+            showStatus(`Added size ${selectedSize} to your cart.`, "success");
+            return;
+        }
+
+        showStatus(result.error || "Unable to add this item right now.", "error");
+    };
+
   return (
     <div className='productdisplay'>
         <div className="productdisplay-left">
@@ -40,14 +85,31 @@ const ProductDisplay = (props) => {
             <div className="productdisplay-right-size">
                 <h1>Select Size</h1>
                 <div className="productdisplay-right-sizes">
-                    <div>S</div>
-                    <div>M</div>
-                    <div>L</div>
-                    <div>XL</div>
-                    <div>XXL</div>
+                    {sizes.map((size)=>(
+                        <button
+                            key={size}
+                            type="button"
+                            className={selectedSize === size ? 'productdisplay-size-option active' : 'productdisplay-size-option'}
+                            onClick={() => setSelectedSize(size)}
+                        >
+                            {size}
+                        </button>
+                    ))}
                 </div>
             </div>
-            <button onClick={()=>{addToCart(product.id)}}>ADD TO CART</button>
+            <button className="productdisplay-addtocart" onClick={handleAddToCart}>
+                {selectedQuantity > 0 ? `ADD ANOTHER • ${selectedQuantity} IN CART` : 'ADD TO CART'}
+            </button>
+            {statusMessage ? (
+                <div className={`productdisplay-status ${statusType}`}>
+                    {statusMessage}
+                </div>
+            ) : null}
+            {selectedQuantity > 0 ? (
+                <div className="productdisplay-cart-indicator">
+                    This product is already in your cart. Adding again increases quantity.
+                </div>
+            ) : null}
             <p className='productdisplay-right-category'><span>Category :</span>Women, T-Shirt, Crop Top</p>
             <p className='productdisplay-right-category'><span>Tags :</span>Modern, Latest</p>
         </div>

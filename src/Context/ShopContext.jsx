@@ -14,13 +14,14 @@ const getDefaultCart = ()=>{
 const ShopContextProvider = (props)=>{
     const [all_product, setAll_Product] = useState([]);
     const [cartItems, setCartItems] = useState(getDefaultCart())
+    const isAuthenticated = () => Boolean(localStorage.getItem('auth-token'));
     
     useEffect(()=>{
         fetch('https://backend-ovfj.onrender.com/allproducts')
         .then((res)=>res.json())
         .then((data)=>setAll_Product(data))
 
-        if (localStorage.getItem('auth-token')){
+        if (isAuthenticated()){
             fetch('https://backend-ovfj.onrender.com/getcart', {
                 method:'POST',
                 headers:{
@@ -34,10 +35,14 @@ const ShopContextProvider = (props)=>{
         }
     }, [])
 
-    const addToCart = (itemId)=>{
+    const addToCart = async (itemId)=>{
+        if (!isAuthenticated()) {
+            return { success: false, requiresAuth: true };
+        }
+
         setCartItems((prev)=>({...prev, [itemId]:prev[itemId]+1}))
-        if (localStorage.getItem('auth-token')){
-            fetch('https://backend-ovfj.onrender.com/addtocart', {
+        try {
+            const response = await fetch('https://backend-ovfj.onrender.com/addtocart', {
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -46,17 +51,27 @@ const ShopContextProvider = (props)=>{
                 },
                 body:JSON.stringify({'ItemId':itemId})
             })
-            .then((res)=>res.json())
-            .then((data)=>console.log(data))
+            const data = await response.json().catch(() => ({}))
+            if (!response.ok) {
+                setCartItems((prev)=>({...prev, [itemId]:Math.max((prev[itemId] || 1)-1, 0)}))
+                return { success: false, error: data.errors || data.error || 'Unable to add item to cart' };
+            }
+            return { success: true, data };
+        } catch (error) {
+            setCartItems((prev)=>({...prev, [itemId]:Math.max((prev[itemId] || 1)-1, 0)}))
+            return { success: false, error: 'Unable to add item to cart' };
         }
-        
     }
     
 
-    const removeFromCart = (itemId)=>{
-        setCartItems((prev)=>({...prev, [itemId]:prev[itemId]-1}))
-        if (localStorage.getItem('auth-token')){
-            fetch('https://backend-ovfj.onrender.com/removefromcart', {
+    const removeFromCart = async (itemId)=>{
+        if (!isAuthenticated()) {
+            return { success: false, requiresAuth: true };
+        }
+
+        setCartItems((prev)=>({...prev, [itemId]:Math.max(prev[itemId]-1, 0)}))
+        try {
+            const response = await fetch('https://backend-ovfj.onrender.com/removefromcart', {
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -65,8 +80,15 @@ const ShopContextProvider = (props)=>{
                 },
                 body:JSON.stringify({'ItemId':itemId})
             })
-            .then((res)=>res.json())
-            .then((data)=>console.log(data))
+            const data = await response.json().catch(() => ({}))
+            if (!response.ok) {
+                setCartItems((prev)=>({...prev, [itemId]:(prev[itemId] || 0)+1}))
+                return { success: false, error: data.errors || data.error || 'Unable to remove item from cart' };
+            }
+            return { success: true, data };
+        } catch (error) {
+            setCartItems((prev)=>({...prev, [itemId]:(prev[itemId] || 0)+1}))
+            return { success: false, error: 'Unable to remove item from cart' };
         }
     }
 
@@ -75,7 +97,9 @@ const ShopContextProvider = (props)=>{
         for(const item in cartItems){
             if(cartItems[item]>0){
                 let itemInfo = all_product.find((product)=>product.id===Number(item))
-                totalAmount+=itemInfo.new_price * cartItems[item]
+                if (itemInfo) {
+                    totalAmount+=itemInfo.new_price * cartItems[item]
+                }
             }
         }return totalAmount
     }
@@ -90,7 +114,7 @@ const ShopContextProvider = (props)=>{
         return totalItem
     }
 
-    const contextValue = {getTotalCartItems, getTotalCartAmount,all_product, cartItems, addToCart, removeFromCart}
+    const contextValue = {getTotalCartItems, getTotalCartAmount,all_product, cartItems, addToCart, removeFromCart, isAuthenticated}
     
 
     
