@@ -3,14 +3,15 @@ import './NewsLetter.css';
 
 const NewsLetter = () => {
   return (
-    <div className='newsletter'>
-        <h1>Get Exclusive Offers On Your Email</h1>
-        <p>Subscribe to our newsletter and stay updated</p>
-        <div>
-            <input type='email' placeholder='Your Email Id'/>
+    <section className='newsletter section-shell'>
+        <span className="section-kicker">Retention layer</span>
+        <h1>Stay close to each release without chasing every drop.</h1>
+        <p>Join the list for first-look launches, private discounts, and product edits worth opening.</p>
+        <div className="newsletter-form">
+            <input type='email' placeholder='Enter your email'/>
             <button>Subscribe</button>
         </div>
-    </div>
+    </section>
   )
 }
 

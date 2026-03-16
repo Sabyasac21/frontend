@@ -9,11 +9,15 @@ const ShopCategory = (props) => {
     <div className='shop-category'>
       <img className='shopcategory-banner' src={props.banner} alt=''/>
       <div className="shopcategory-indexSort">
-        <p>
-          <span>Showing 1-12</span> out of 36 products
-        </p>
+        <div>
+          <span className="shopcategory-kicker">Curated category edit</span>
+          <p>
+            <span>Showing tailored picks</span> for {props.category}
+          </p>
+        </div>
         <div className="shopcategory-sort">
-          Sort by <img src={dropdown_icon} alt=''/>
+          Refined by newest
+          <img src={dropdown_icon} alt=''/>
         </div>
       </div>
       <div className="shopcategory-products">

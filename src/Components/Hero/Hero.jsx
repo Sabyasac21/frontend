@@ -1,33 +1,50 @@
 import React from "react";
 import "./Hero.css";
-import hand_icon from "../Assests/hand_icon.png";
-import arrow_icon from "../Assests/arrow.png";
 import hero_image from "../Assests/hero_image.png";
 
 const Hero = () => {
   return (
-    <div className="hero">
+    <section className="hero section-shell">
       <div className="hero-left">
-        <h2>NEW ARRIVALS ONLY</h2>
-        <div>
-          <div className="hero-hand-icon">
-            <p>new</p>
-            <img src={hand_icon} alt="" />
-          </div>
-          <p>collections</p>
-          <p style={{textWrap:'nowrap'}}>for everyone</p>
+        <span className="hero-kicker">New season curated edit</span>
+        <div className="hero-copy">
+          <h1>
+            Refined fashion for
+            <span> daily confidence.</span>
+          </h1>
+          <p>
+            Built for shoppers who want premium basics, clean silhouettes, and
+            effortless styling across women, men, and kids.
+          </p>
         </div>
-        <div className="hero-latest-btn">
-          <div>Latest Collection</div>
-          <img src={arrow_icon} alt="" />
+        <div className="hero-actions">
+          <a className="hero-primary" href="#collections">
+            Explore collection
+          </a>
+          <div className="hero-metrics">
+            <div>
+              <strong>120+</strong>
+              <span>new arrivals</span>
+            </div>
+            <div>
+              <strong>48h</strong>
+              <span>dispatch promise</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="hero-right">
-      <img src={hero_image} alt="" />
+        <div className="hero-spotlight">
+          <div className="hero-floating-card">
+            <span>Editor pick</span>
+            <strong>Contemporary comfort layers</strong>
+            <p>Lightweight textures, premium finish, strong everyday styling.</p>
+          </div>
+          <img src={hero_image} alt="Featured seasonal fashion" />
+        </div>
       </div>
-        
-    </div>
+    </section>
   );
 };
 
